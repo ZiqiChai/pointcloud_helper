@@ -15,7 +15,7 @@
 #include "opencv2/imgproc/imgproc.hpp"
 
 int
- main (int argc, char** argv)
+main (int argc, char** argv)
 {
   // Loading first scan of room.
   pcl::PointCloud<pcl::PointXYZ>::Ptr target_cloud (new pcl::PointCloud<pcl::PointXYZ>);
@@ -41,7 +41,7 @@ int
   approximate_voxel_filter.setInputCloud (input_cloud);
   approximate_voxel_filter.filter (*filtered_cloud);
   std::cout << "Filtered cloud contains " << filtered_cloud->size ()
-            << " data points from room_scan2.pcd" << std::endl;
+  << " data points from room_scan2.pcd" << std::endl;
 
 
 
@@ -53,6 +53,7 @@ int
   double start = (double)(cv::getTickCount());
   pcl::IterativeClosestPoint<pcl::PointXYZ, pcl::PointXYZ> icp;
   icp.setMaximumIterations (1000);
+  icp.setMaxCorrespondenceDistance(0.001);
   icp.setInputSource(filtered_cloud);
   icp.setInputTarget(target_cloud);
   pcl::PointCloud<pcl::PointXYZ> Final;
@@ -79,14 +80,14 @@ int
   target_color (target_cloud, 255, 0, 0);
   viewer_final->addPointCloud<pcl::PointXYZ> (target_cloud, target_color, "target cloud");
   viewer_final->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE,
-                                                  1, "target cloud");
+    1, "target cloud");
 
   // Coloring and visualizing transformed input cloud (green).
   pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ>
   output_color (output_cloud, 0, 255, 0);
   viewer_final->addPointCloud<pcl::PointXYZ> (output_cloud, output_color, "output cloud");
   viewer_final->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE,
-                                                  1, "output cloud");
+    1, "output cloud");
 
   // Starting visualizer
   viewer_final->addCoordinateSystem (1.0, 0 );
@@ -102,5 +103,5 @@ int
 
 
 
- return (0);
+  return (0);
 }

@@ -9,10 +9,10 @@
 int main(int argc, char** argv)
 {
 	//创建点云对象
-	pcl::PointCloud<pcl::PointXYZ>::Ptr  cloud(new pcl::PointCloud<pcl::PointXYZ>);
+	pcl::PointCloud<pcl::PointXYZRGB>::Ptr  cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
 
 	//读取PLY文件
-	if (pcl::io::loadPLYFile<pcl::PointXYZ>(argv[1],*cloud) !=0)
+	if (pcl::io::loadPLYFile<pcl::PointXYZRGB>(argv[1],*cloud) !=0)
 	{
 		PCL_ERROR("Couldn't read PLY file \n");
 		return (-1);
@@ -21,5 +21,6 @@ int main(int argc, char** argv)
 	// for (size_t i = 0; i < cloud->points.size(); ++i)
 	// 	std::cout << " " << cloud->points[i].x << " " << cloud->points[i].y << " " << cloud->points[i].z << "\r";
 	pcl::io::savePCDFileASCII(argv[2],*cloud);
+	PCL_INFO("Convertion finished.");
 	return (0);
 }

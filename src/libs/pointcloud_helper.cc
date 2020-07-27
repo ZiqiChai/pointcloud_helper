@@ -139,6 +139,7 @@ int loadPointCloudData(string inputFilename, pcl::PointCloud<pcl::PointXYZ>::Ptr
 			{
 				return -1;
 			}
+			std::cout << "Loaded " << cloud->size () << " points from " << inputFilename << std::endl;
 		}
 	}
 	else//存在。
@@ -148,9 +149,10 @@ int loadPointCloudData(string inputFilename, pcl::PointCloud<pcl::PointXYZ>::Ptr
 		{
 			return -1;
 		}
+		std::cout << "Loaded " << cloud->size () << " points from " << inputFilename << std::endl;
 	}
 
-	id2=inputFilename.find(ply);//在inputFilename中查找pcd.
+	id2=inputFilename.find(ply);//在inputFilename中查找ply.
 	if(id2 == string::npos )//不存在。
 	{
 		id2=inputFilename.find(PLY);
@@ -160,20 +162,108 @@ int loadPointCloudData(string inputFilename, pcl::PointCloud<pcl::PointXYZ>::Ptr
 		}
 		else//存在。
 		{
-		//读取PCD文件
+		//读取PLY文件
 			if(pcl::io::loadPLYFile<pcl::PointXYZ>(inputFilename,*cloud) !=0)
 			{
 				return -1;
 			}
+			std::cout << "Loaded " << cloud->size () << " points from " << inputFilename << std::endl;
+		}
+	}
+	else//存在。
+	{
+		//读取PLY文件
+		if(pcl::io::loadPLYFile<pcl::PointXYZ>(inputFilename,*cloud) !=0)
+		{
+			return -1;
+		}
+		std::cout << "Loaded " << cloud->size () << " points from " << inputFilename << std::endl;
+	}
+
+	if( (id1 == string::npos) && (id2 == string::npos) )
+	{
+		double end = ((double)cv::getTickCount() - start) / cv::getTickFrequency();
+		std::cout << "loadPointCloudData() 所用时间为：" << end <<std::endl;
+		std::cout << "loadPointCloudData() 执行状态为：" << "FAILED!" <<std::endl;
+		return -1;
+	}
+	else
+	{
+		double end = ((double)cv::getTickCount() - start) / cv::getTickFrequency();
+		std::cout << "loadPointCloudData() 所用时间为：" << end <<std::endl;
+		std::cout << "loadPointCloudData() 执行状态为：" << "SUCCESS!" <<std::endl;
+		return 0;
+	}
+}
+
+
+
+int loadPointCloudData(string inputFilename, pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud)
+{
+	double start = (double)(cv::getTickCount());
+
+	string pcd=".pcd";
+	string ply=".ply";
+	string PCD=".PCD";
+	string PLY=".PLY";
+	string::size_type id1;
+	string::size_type id2;
+
+
+	id1=inputFilename.find(pcd);//在inputFilename中查找pcd.
+	if(id1 == string::npos )//不存在。
+	{
+		id1=inputFilename.find(PCD);
+		if(id1 == string::npos )
+		{
+			std::cout<<"inputFile is not .pcd file."<<std::endl;
+		}
+		else//存在。
+		{
+		//读取PCD文件
+			if(pcl::io::loadPCDFile<pcl::PointXYZRGB>(inputFilename,*cloud) !=0)
+			{
+				return -1;
+			}
+			std::cout << "Loaded " << cloud->size () << " points from " << inputFilename << std::endl;
 		}
 	}
 	else//存在。
 	{
 		//读取PCD文件
-		if(pcl::io::loadPLYFile<pcl::PointXYZ>(inputFilename,*cloud) !=0)
+		if(pcl::io::loadPCDFile<pcl::PointXYZRGB>(inputFilename,*cloud) !=0)
 		{
 			return -1;
 		}
+		std::cout << "Loaded " << cloud->size () << " points from " << inputFilename << std::endl;
+	}
+
+	id2=inputFilename.find(ply);//在inputFilename中查找ply.
+	if(id2 == string::npos )//不存在。
+	{
+		id2=inputFilename.find(PLY);
+		if(id2 == string::npos )
+		{
+			std::cout<<"inputFile is not .ply file."<<std::endl;
+		}
+		else//存在。
+		{
+		//读取PLY文件
+			if(pcl::io::loadPLYFile<pcl::PointXYZRGB>(inputFilename,*cloud) !=0)
+			{
+				return -1;
+			}
+			std::cout << "Loaded " << cloud->size () << " points from " << inputFilename << std::endl;
+		}
+	}
+	else//存在。
+	{
+		//读取PLY文件
+		if(pcl::io::loadPLYFile<pcl::PointXYZRGB>(inputFilename,*cloud) !=0)
+		{
+			return -1;
+		}
+		std::cout << "Loaded " << cloud->size () << " points from " << inputFilename << std::endl;
 	}
 
 	if( (id1 == string::npos) && (id2 == string::npos) )

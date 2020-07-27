@@ -47,6 +47,7 @@ using namespace pcl;
 
 cv::Mat getR2registeZ(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud);
 int loadPointCloudData(string inputFilename, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud);
+int loadPointCloudData(string inputFilename, pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud);
 Eigen::Matrix4f E2R(const double alpha, const double beta, const double gamma);
 void getCenter(pcl::PointCloud<pcl::PointXYZ>::Ptr& cloud, float &x, float &y, float &z);
 Eigen::Matrix4f planeAlign(const pcl::PointCloud<pcl::PointXYZ>::Ptr& cloud);
